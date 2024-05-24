@@ -59,10 +59,6 @@ public class Product {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @Transient
-    @JsonProperty("categoryName")
-    private String supplierName;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createAt;
@@ -76,9 +72,5 @@ public class Product {
         if (category != null) {
             this.categoryName = category.getName();
         }
-        if (supplier != null) {
-            this.supplierName = supplier.getName();
-        }
     }
-
 }

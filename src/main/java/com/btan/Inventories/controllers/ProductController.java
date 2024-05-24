@@ -191,7 +191,7 @@ public class ProductController {
         product.setAvailableQuantinty(productDTO.getAvailableQuantinty());
         product.setUnitPrice(productDTO.getUnitPrice());
 
-        // Handle MultipartFile conversion here
+
         MultipartFile file = productDTO.getProductImage();
         if (file != null) {
             product.setProductImage(file.getOriginalFilename());

@@ -23,8 +23,8 @@ public class Inventory {
     @Column(name = "inventory_id")
     private UUID inventoryId;
 
-    @NotNull
-    private Product product;
+    // @NotNull
+    // private Product product;
 
     @NotBlank
     private String location;
