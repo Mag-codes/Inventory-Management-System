@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.btan.Inventories.model.Role;
 import com.btan.Inventories.model.User;
 import com.btan.Inventories.repo.UserRepository;
 import com.btan.Inventories.settings.EmailConfigurer;
@@ -29,15 +30,28 @@ public class UserService implements UserDetailsService {
     @Autowired
     private EmailConfigurer emailConfigurer;
 
+    @Autowired
+    private RoleService roleService;
+
     public Map<String, Object> registerUser(@Valid User user) throws MessagingException {
         Map<String, Object> response = new HashMap<>();
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             response.put("Error", "Email or username has been taken");
             return response;
         } else {
+
+            // hashing the password
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashedPassword);
+
+            // setting user role
+            Optional<Role> optionalRole = roleService.getRoleByName("STAFF");
+            if (optionalRole.isPresent()) {
+                Role role = optionalRole.get();
+                user.setRole(role);
+            }
+
             User theUser = userRepository.save(user);
             emailConfigurer.sendConfirmaitonEmail(user.getEmail(), "Account created successfully",
                     "Account Confirmation", "", "");

@@ -37,7 +37,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             "/swagger-ui/**",
             "/swagger-ui/index.html",
             "/users/register",
-            "/users/login"
+            "/users/login",
+            "/images/**"
     };
 
     @Override

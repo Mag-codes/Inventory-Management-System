@@ -1,12 +1,13 @@
 package com.btan.Inventories.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.btan.Inventories.model.Product;
@@ -32,12 +33,22 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public Map<String, Object> getAllProducts() {
-        Map<String, Object> response = new HashMap<>();
-        List<Product> products = productRepository.findAll();
-        response.put("data", products);
-        return response;
-    }
+ public Map<String, Object> getAllProducts(int page, int size, String sortBy) {
+    Map<String, Object> response = new HashMap<>();
+    
+    // Create pageable object for pagination and sorting
+    PageRequest pageable = PageRequest.of(page, size, Sort.by(sortBy));
+    
+    // Fetch products with pagination and sorting
+    Page<Product> productPage = productRepository.findAll(pageable);
+    
+    response.put("data", productPage.getContent());
+    response.put("currentPage", productPage.getNumber());
+    response.put("totalItems", productPage.getTotalElements());
+    response.put("totalPages", productPage.getTotalPages());
+    
+    return response;
+}
 
     public Map<String, Object> updateProduct(UUID productId, @Valid Product updatedProduct) {
         Map<String, Object> response = new HashMap<>();

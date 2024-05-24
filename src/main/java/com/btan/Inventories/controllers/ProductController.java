@@ -111,10 +111,13 @@ public class ProductController {
     }
 
     @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> getAllProducts() {
+    public ResponseEntity<?> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
         Map<String, Object> response = new HashMap<>();
         try {
-            response = productService.getAllProducts();
+            response = productService.getAllProducts(page, size, sortBy);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +193,6 @@ public class ProductController {
         product.setDescription(productDTO.getDescription());
         product.setAvailableQuantinty(productDTO.getAvailableQuantinty());
         product.setUnitPrice(productDTO.getUnitPrice());
-
 
         MultipartFile file = productDTO.getProductImage();
         if (file != null) {

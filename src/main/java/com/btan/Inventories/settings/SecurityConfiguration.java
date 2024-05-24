@@ -27,7 +27,8 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/users/register",
-            "users/login"
+            "users/login",
+            "/images/**"
     };
 
     @Autowired
