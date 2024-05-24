@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${header}">Account Creation Confirmation</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center mt-5">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="card">
+            <div class="card-header text-center bg-light">
+              <h1 th:text="${header}">
+                Welcome to Inventory Management System
+              </h1>
+            </div>
+            <div class="card-body">
+              <p th:text="${bodyText}">Dear [User],</p>
+              <p>
+                Thank you for creating an account with our Inventory Management
+                System. Your account has been successfully created, and you can
+                now start managing your inventory with ease.
+              </p>
+              <p>
+                To get started, please verify your email address by clicking the
+                button below:
+              </p>
+              <div class="text-center my-4">
+                <a th:href="${verificationLink}" class="btn btn-primary"
+                  >Verify Email</a
+                >
+              </div>
+              <p>
+                If you did not create an account, please ignore this email or
+                contact our support team.
+              </p>
+              <p>Best regards,<br />The Inventory Management System Team</p>
+            </div>
+            <div class="card-footer text-center bg-light">
+              <p>&copy; 2024 Inventory Management System</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
